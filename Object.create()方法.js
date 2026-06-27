@@ -1,10 +1,8 @@
-
 var person = Object.create(null);
-person.name = '张三';
+person.name = "张三";
 person.getName = function () {
-    console.log('1', this.name);
-
-}
+  console.log("1", this.name);
+};
 
 // console.log(person.__proto__ === null);
 // console.log(person.__proto__);
@@ -12,5 +10,4 @@ person.getName = function () {
 // person.getName();
 
 const fn = person.getName;
-console.log(fn())
-
+console.log(fn());

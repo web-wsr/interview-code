@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input type="text" />
+    <button class="button_1st">一级废话</button>
+    <button class="button_2nd">二级废话</button>
+    <p></p>
+  </body>
+  <script>
+    const input = document.querySelector("input");
+    const button_1st = document.querySelector(".button_1st");
+    const button_2nd = document.querySelector(".button_2nd");
+    const p = document.querySelector("p");
+    class Bullshit {
+      constructor(text, color) {
+        this.text = text;
+        // console.log(this); // 构造函数中的this 指向的是实例对象
+        this.color = color;
+      }
+      // 静态方法
+      static welcome_tips() {
+        alert("欢迎来到废话生成器");
+        return "欢迎来到废话生成器";
+      }
+      static welcome() {
+        // 这里的this 指向的是Bullshit
+        p.innerHTML = this.welcome_tips();
+      }
+      // show 方法
+      show() {
+        p.innerHTML = this.text + input.value;
+        p.style.color = this.color;
+      }
+      //   geter 和 setter
+      set extra(value) {
+        this.value = value;
+        p.innerHTML = p.innerHTML + this.value;
+      }
+      get extra() {
+        return `这些是一些废话: ${this.text} + ${this.value}`;
+      }
+    }
+    // 子类继承父类
+    class Son_of_Bullshit extends Bullshit {
+      constructor(text, color, fontSize) {
+        // super  继承父类
+        super(text, color);
+        this.fontSize = fontSize;
+        console.log(this);
+      }
+      show() {
+        p.innerHTML = this.text + p.innerHTML;
+        p.style.color = this.color;
+        p.style.fontSize = this.fontSize;
+      }
+    }
+    button_1st.addEventListener("click", () => {
+      const bullshit = new Bullshit("我知道", "#00a1d6");
+      bullshit.show();
+      bullshit.extra = "儿级";
+      console.log(bullshit.extra);
+    });
+    button_2nd.addEventListener("click", () => {
+      const son_of_Bullshit = new Son_of_Bullshit(
+        "你知道你",
+        "#ff0000",
+        "30px"
+      );
+      son_of_Bullshit.show();
+    });
+    p.addEventListener("click", () => {
+      Bullshit.welcome(); // 静态方法 需要通过类 调用
+    });
+  </script>
+</html>

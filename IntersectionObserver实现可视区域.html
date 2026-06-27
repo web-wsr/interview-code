@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- 引入jquery -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Document</title>
+    <style>
+      .container {
+        display: flex;
+        flex-wrap: wrap;
+      }
+      .target {
+        margin: 5px;
+        width: 20px;
+        height: 20px;
+        background: red;
+        transition: background-color 1s; /* Adding transition for background color */
+      }
+      .yellow {
+        background-color: yellow; /* 定义一个新的类，使目标变为黄色 */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container"></div>
+    <script>
+      const $container = $(".container");
+      function createTargets() {
+        const htmlString = new Array(10000)
+          .fill('<div class="target"></div>')
+          .join("");
+        $container.html(htmlString);
+      }
+      createTargets();
+      function getYellow(entries, observer) {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            $(entry.target).addClass("yellow"); // 使用类名更改颜色
+            observer.unobserve(entry.target); // 取消观察已改变颜色的元素
+          } else {
+            $(entry.target).removeClass("yellow");
+          }
+        });
+      }
+      const observer = new IntersectionObserver(getYellow, { threshold: 0.5 });
+      $(".target").each((index, element) => {
+        observer.observe(element);
+      });
+      console.log($container);
+    </script>
+  </body>
+</html>
